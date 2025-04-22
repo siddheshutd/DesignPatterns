@@ -8,30 +8,38 @@ public class ProductSelection : IState
     {            
         _vendingMachine = vendingMachine;   
     }
-    public void CancelTransaction()
+
+    public void Cancel()
     {
-        Console.WriteLine("Transaction cancelled");
-        _vendingMachine.ReturnCoins();
-        _vendingMachine.setState(new Idle(_vendingMachine));
+        Console.WriteLine("Product Selection Cancelled");
+        _vendingMachine.Reset();
+        _vendingMachine.setState(new IdleState(_vendingMachine));
     }
 
     public void DispenseProduct()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Select Product First");
     }
 
-    public void EnterCoins(int coins)
+    public void InsertCoins(Coin coin)
     {
-        Console.WriteLine("Coins already entered");
+        Console.WriteLine("Select Product before Inserting Coins");
     }
 
-    public void ReturnCoins()
+    public void InsertNotes(Note note)
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Select Product before Inserting Notes");
     }
 
     public void SelectProduct(int code)
     {
-        Console.WriteLine("Product selection already in progress");
+        if(_vendingMachine.isProductAvailable(code)){
+            _vendingMachine.SetSelectedProduct(code);
+        }
+    }
+
+    public void Start()
+    {
+        throw new NotImplementedException();
     }
 }

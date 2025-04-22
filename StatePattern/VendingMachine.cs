@@ -1,21 +1,25 @@
 namespace C_;
 
-public class VendingMachine : IState
+public class VendingMachine
 {
-    int coins = 0;
+    int totalAmount = 0;
     IState currentState;
+    Inventory _Inventory = new Inventory();
+    Product? selectedProduct;
 
     public VendingMachine(IState state)
     {
+        selectedProduct = null;
         currentState = state;
     }
+
     public void setState(IState state)
     {
         currentState = state;
     }
-    public void CancelTransaction()
+    public void Cancel()
     {
-        currentState.CancelTransaction();
+        currentState.Cancel();
     }
 
     public void DispenseProduct()
@@ -23,19 +27,55 @@ public class VendingMachine : IState
         currentState.DispenseProduct();
     }
 
-    public void EnterCoins(int coins)
+    public void InsertCoins(Coin coins)
     {
-        currentState.EnterCoins(coins);
+        currentState.InsertCoins(coins);
     }
 
-    public void ReturnCoins()
+    public void AddProduct(Product product, int totalAmount)
     {
-        Console.WriteLine($"{coins} Coins returned");
-        coins = 0;
+        _Inventory.AddProduct(product, totalAmount);
+    }
+
+    public void Reset(){
+        ReturnChange();
+        selectedProduct = null;
+    }
+
+    public void ReturnChange()
+    {
+        if (totalAmount > 0)
+        {
+            Console.WriteLine("Returning change: " + totalAmount);
+            totalAmount = 0;
+        }
+    }
+
+    public bool isProductAvailable(int code)
+    {
+        return _Inventory.isAvailable(code);
+    }
+
+    public void SetSelectedProduct(int code)
+    {
+        selectedProduct = _Inventory.GetProduct(code);
+    }
+
+    public bool isSufficientAmount(int code)
+    {
+        //return _Inventory.isSufficientAmount(code, totalAmount);
     }
 
     public void SelectProduct(int code)
     {
         currentState.SelectProduct(code);
+    }
+
+    public void AddCoin(Coin coin){
+        totalAmount += (int)coin/100;
+    }
+
+    public void AddNote(Note note){
+        totalAmount += (int)note;
     }
 }
