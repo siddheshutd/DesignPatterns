@@ -1,4 +1,4 @@
-namespace C_;
+namespace DecoratorPattern;
 
 public interface IBasePizza
 {

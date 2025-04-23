@@ -1,4 +1,4 @@
-namespace C_;
+namespace FactoryPattern;
 
 public abstract class VehicleFactory
 {

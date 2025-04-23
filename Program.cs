@@ -1,36 +1,40 @@
-﻿﻿using ChainOfResponsibilityPattern; // Add this using statement
+﻿﻿using StatePattern;
+using ChainOfResponsibilityPattern; // Add this using statement
 using ProxyPattern;
-using System; // Add for Console
+using System;
+using ObserverPattern;
+using DecoratorPattern;
+using FactoryPattern; // Add for Console
 
 class Program{
 
     static void Main() {
                                 /* Observer Pattern */
-        // IStocksObservable macbookObservable = new MacBookObservable(0);
-        // EmailAlertObserver observer1 = new EmailAlertObserver("siddheshutd@gmail.com");
-        // EmailAlertObserver observer2 = new EmailAlertObserver("siddheshutd@gmail2.com");
-        // EmailAlertObserver observer3 = new EmailAlertObserver("");
-        // EmailAlertObserver observer4 = new EmailAlertObserver("");
-        // macbookObservable.Add(observer1);
-        // macbookObservable.Add(observer2);
-        // macbookObservable.Add(observer3);
-        // macbookObservable.Add(observer4);
-        // int count = int.Parse(Console.ReadLine()!);
-        // macbookObservable.AddStock(count);
+        IStocksObservable macbookObservable = new MacBookObservable(0);
+        EmailAlertObserver observer1 = new EmailAlertObserver("siddheshutd@gmail.com");
+        EmailAlertObserver observer2 = new EmailAlertObserver("siddheshutd@gmail2.com");
+        EmailAlertObserver observer3 = new EmailAlertObserver("");
+        EmailAlertObserver observer4 = new EmailAlertObserver("");
+        macbookObservable.Add(observer1);
+        macbookObservable.Add(observer2);
+        macbookObservable.Add(observer3);
+        macbookObservable.Add(observer4);
+        int count = int.Parse(Console.ReadLine()!);
+        macbookObservable.AddStock(count);
 
                                 /* Decorator Pattern */
-        // IBasePizza pizza = new Jalapenos(new CheeseBurst(new Margherita()));
-        // Console.WriteLine($"Pizza cost is {pizza.GetCost()}");
+        IBasePizza pizza = new Jalapenos(new CheeseBurst(new Margherita()));
+        Console.WriteLine($"Pizza cost is {pizza.GetCost()}");
 
                                 /* Factory Pattern */
-        // VehicleFactory carFactory = new CarFactory();
-        // carFactory.DeliverVehicle();
+        VehicleFactory carFactory = new CarFactory();
+        carFactory.DeliverVehicle();
 
-        // VehicleFactory bikeFactory = new BikeFactory();
-        // bikeFactory.DeliverVehicle();
+        VehicleFactory bikeFactory = new BikeFactory();
+        bikeFactory.DeliverVehicle();
 
                                 /* Chain of Responsibility Pattern */
-        // Create handlers
+        //Create handlers
         IWithdrawHandler handler50 = new FiftyPoundHandler();
         IWithdrawHandler handler20 = new TwentyPoundHandler();
         IWithdrawHandler handler10 = new TenPoundHandler();
@@ -63,5 +67,17 @@ class Program{
 
         Console.WriteLine("Second call");
         var data2 = service.GetData("test");
-        Console.WriteLine(data2);    }
+        Console.WriteLine(data2);    
+
+                                /* State Pattern */
+        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.AddProduct(new Product(100, "Coke", 1.50), 5);
+        vendingMachine.Start();
+
+        vendingMachine.SelectProduct(102);
+
+        vendingMachine.AddCoin(Coin.Nickel);
+        vendingMachine.AddNote(Note.FivePound);
+        vendingMachine.DispenseProduct();
+    }
 }

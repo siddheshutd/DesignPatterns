@@ -1,10 +1,11 @@
-namespace C_;
+namespace StatePattern;
 
 public interface IState
 {
-    public void EnterCoins(int coins);
+    public void Start();
+    public void InsertCoins(Coin coin);
+    public void InsertNotes(Note note);
     public void SelectProduct(int code);
     public void DispenseProduct();
-    public void ReturnCoins();
-    public void CancelTransaction();
+    public void Cancel();
 }

@@ -1,15 +1,9 @@
-using System.Runtime.Serialization;
-
-namespace C_;
+namespace StatePattern;
 
 public enum Coin
 {
-    [EnumMember()]
-    Penny,
-    [EnumMember()]
-    Nickel,
-    [EnumMember()]
-    Dime,
-    [EnumMember()]
-    Quarter
+    Penny = 5,
+    Nickel = 50,
+    Dime = 10,
+    Quarter = 25
 }
