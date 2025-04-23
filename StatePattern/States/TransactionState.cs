@@ -1,4 +1,4 @@
-namespace C_;
+namespace StatePattern;
 
 public class TransactionState : IState
 {
@@ -18,7 +18,12 @@ public class TransactionState : IState
 
     public void DispenseProduct()
     {
-        Console.WriteLine("Please make payment first");
+        if(_vendingMachine.isSufficientAmount()){
+            _vendingMachine.setState(new DispenseState(_vendingMachine));
+            _vendingMachine.DispenseProduct();
+        } else {
+            Console.WriteLine("Insufficient amount");
+        }
     }
 
     public void InsertCoins(Coin coin)

@@ -1,4 +1,4 @@
-namespace C_;
+namespace StatePattern;
 
 public class ProductSelection : IState
 {
@@ -35,6 +35,10 @@ public class ProductSelection : IState
     {
         if(_vendingMachine.isProductAvailable(code)){
             _vendingMachine.SetSelectedProduct(code);
+            _vendingMachine.setState(new TransactionState(_vendingMachine));
+            Console.WriteLine("Product Selected");
+        } else {
+            Console.WriteLine("Product Not Available");
         }
     }
 

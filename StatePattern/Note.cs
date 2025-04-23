@@ -1,4 +1,4 @@
-namespace C_;
+namespace StatePattern;
 
 public enum Note
 {

@@ -1,4 +1,4 @@
-namespace C_;
+namespace StatePattern;
 
 public class Inventory
 {
@@ -23,5 +23,14 @@ public class Inventory
         }
         Products[product.code] += quantity;
         if(!ProductMap.ContainsKey(product.code)) ProductMap[product.code] = product;
+    }
+
+    public void RemoveProduct(int productCode, int quantity)
+    {
+        Products[productCode] -= quantity;
+        if(Products[productCode] == 0) {
+            Products.Remove(productCode);
+            ProductMap.Remove(productCode);
+        }
     }
 }

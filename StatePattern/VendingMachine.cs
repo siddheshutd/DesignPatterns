@@ -1,22 +1,27 @@
-namespace C_;
+namespace StatePattern;
 
 public class VendingMachine
 {
-    int totalAmount = 0;
+    double totalAmount = 0;
     IState currentState;
     Inventory _Inventory = new Inventory();
     Product? selectedProduct;
 
-    public VendingMachine(IState state)
+    public VendingMachine()
     {
         selectedProduct = null;
-        currentState = state;
+        currentState = new IdleState(this);
     }
 
     public void setState(IState state)
     {
         currentState = state;
     }
+    public void Start()
+    {
+        currentState.Start();
+    }
+
     public void Cancel()
     {
         currentState.Cancel();
@@ -61,9 +66,9 @@ public class VendingMachine
         selectedProduct = _Inventory.GetProduct(code);
     }
 
-    public bool isSufficientAmount(int code)
+    public bool isSufficientAmount()
     {
-        //return _Inventory.isSufficientAmount(code, totalAmount);
+        return totalAmount >= selectedProduct?.price;
     }
 
     public void SelectProduct(int code)
@@ -72,10 +77,16 @@ public class VendingMachine
     }
 
     public void AddCoin(Coin coin){
-        totalAmount += (int)coin/100;
+        totalAmount += (int)coin/100.0;
     }
 
     public void AddNote(Note note){
-        totalAmount += (int)note;
+        totalAmount += (int)note/1.0;
+    }
+
+    public void processOrder(){
+        _Inventory.RemoveProduct(selectedProduct.code, 1);
+        totalAmount -= selectedProduct.price;
+        ReturnChange();
     }
 }
