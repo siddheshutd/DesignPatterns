@@ -1,4 +1,4 @@
-namespace C_;
+namespace ObserverPattern;
 
 public interface IStocksObserver
 {

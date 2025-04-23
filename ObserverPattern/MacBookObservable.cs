@@ -1,4 +1,4 @@
-namespace C_;
+namespace ObserverPattern;
 
 public class MacBookObservable : IStocksObservable
 {
