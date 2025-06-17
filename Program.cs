@@ -5,11 +5,14 @@ using System;
 using ObserverPattern;
 using DecoratorPattern;
 using FactoryPattern; // Add for Console
+using CompositePattern;
+
 
 class Program{
 
-    static void Main() {
-                                /* Observer Pattern */
+    static void Main()
+    {
+        /* Observer Pattern */
         IStocksObservable macbookObservable = new MacBookObservable(0);
         EmailAlertObserver observer1 = new EmailAlertObserver("siddheshutd@gmail.com");
         EmailAlertObserver observer2 = new EmailAlertObserver("siddheshutd@gmail2.com");
@@ -22,18 +25,18 @@ class Program{
         int count = int.Parse(Console.ReadLine()!);
         macbookObservable.AddStock(count);
 
-                                /* Decorator Pattern */
+        /* Decorator Pattern */
         IBasePizza pizza = new Jalapenos(new CheeseBurst(new Margherita()));
         Console.WriteLine($"Pizza cost is {pizza.GetCost()}");
 
-                                /* Factory Pattern */
+        /* Factory Pattern */
         VehicleFactory carFactory = new CarFactory();
         carFactory.DeliverVehicle();
 
         VehicleFactory bikeFactory = new BikeFactory();
         bikeFactory.DeliverVehicle();
 
-                                /* Chain of Responsibility Pattern */
+        /* Chain of Responsibility Pattern */
         //Create handlers
         IWithdrawHandler handler50 = new FiftyPoundHandler();
         IWithdrawHandler handler20 = new TwentyPoundHandler();
@@ -56,8 +59,8 @@ class Program{
 
         Console.WriteLine("\nAttempting to withdraw £5:");
         handler50.Dispense(5); // Example below smallest denomination
-        
-                                /* Proxy Pattern */
+
+        /* Proxy Pattern */
 
         IService service = new ServiceProxy(new Service());
 
@@ -67,9 +70,9 @@ class Program{
 
         Console.WriteLine("Second call");
         var data2 = service.GetData("test");
-        Console.WriteLine(data2);    
+        Console.WriteLine(data2);
 
-                                /* State Pattern */
+        /* State Pattern */
         VendingMachine vendingMachine = new VendingMachine();
         vendingMachine.AddProduct(new Product(100, "Coke", 1.50), 5);
         vendingMachine.Start();
@@ -79,5 +82,23 @@ class Program{
         vendingMachine.AddCoin(Coin.Nickel);
         vendingMachine.AddNote(Note.FivePound);
         vendingMachine.DispenseProduct();
+
+        /* Composite Pattern */
+        Folder root = new Folder("root");
+        Folder folder1 = new Folder("folder1");
+        Folder folder2 = new Folder("folder2");
+        CompositePattern.File file1 = new CompositePattern.File("my resume.txt", 100);
+        CompositePattern.File file2 = new CompositePattern.File("my cover letter.txt", 100);
+        CompositePattern.File file3 = new CompositePattern.File("my friend's resume.txt", 100);
+        CompositePattern.File file4 = new CompositePattern.File("my friend's cover letter.txt", 100);
+        root.Add(folder1);
+        root.Add(folder2);
+        folder1.Add(file1);
+        folder1.Add(file2);
+        folder2.Add(file3);
+        folder2.Add(file4);
+
+        //root.PrintStructure();
+        Console.WriteLine(root.GetSize());
     }
 }
